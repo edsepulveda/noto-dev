@@ -2,32 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+:root{
+  --gradient-angle: 360deg;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html, body :root {
+  height: 100%;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hero-button-effect {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(211, 60%, 48%, 0.7),
+    hsla(211, 60%, 48%, 0.3),
+    #3178c6,
+    hsla(211, 60%, 48%, 0.5)
+  );
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.hero-button-effect-dark {
+  background: linear-gradient(
+    var(--gradient-angle),
+    hsla(0, 0%, 100%, 0.5),
+    hsla(0, 0%, 100%, 0.1),
+    #fff,
+    hsla(0, 0%, 100%, 0.3)
+  ) !important;
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg
+  }
+  100% {
+    --gradient-angle: 0deg
   }
 }
