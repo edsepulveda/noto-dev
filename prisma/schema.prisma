@@ -20,7 +20,7 @@ generator client {
 model Documents {
   id String @id @default(uuid())
   title String
-  userId String @unique
+  userId String
   isArchived Boolean @default(false)
   parentDocumentId String? @unique
   parentDocument Documents? @relation("ParentDocument", fields: [parentDocumentId], references: [id])

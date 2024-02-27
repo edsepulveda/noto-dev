@@ -2,19 +2,41 @@
 
 import Image from "next/image";
 import Empty from "@/public/empty.svg";
-import { Button } from "@nextui-org/react";
+import { Button, cn } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import useUser from "@/app/hooks/useUser";
-import { createClient } from "@/utils/supabase/client";
+import { useSupabaseBrowser } from "@/utils/supabase/client";
+import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function DocumentsPage() {
-  const { user, isLoading } = useUser();
-  const supabase = createClient();
+  const { data, isLoading } = useUser();
+  const supabase = useSupabaseBrowser();
+  const queryClient = useQueryClient();
 
-  const createNote = async () => {
-    const data = await supabase
-      .from("documents")
-      .insert({ title: "Untitled", userId: user?.id });
+  const mutate = useMutation({
+    mutationFn: async () => {
+      return await supabase.from("Documents").insert({
+        id: crypto.randomUUID(),
+        title: "Untitled",
+        userId: data?.data.user?.id ?? "",
+        isArchived: false,
+        isPublished: false,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
+  });
+
+  const createNote = () => {
+    const muta = mutate.mutateAsync();
+
+    toast.promise(muta, {
+      loading: "Creating a note...",
+      success: "Note has been created",
+      error: "Note cannot be created",
+    });
   };
 
   return (
@@ -22,15 +44,26 @@ export default function DocumentsPage() {
       <Image src={Empty} alt="Empty home page" className="size-[300px]" />
       {!isLoading && (
         <h2 className="text-lg md:text-xl font-bold">
-          Welcome to {user?.user_metadata.name ?? ""}&apos;s Notes
+          Welcome to {data?.data.user?.user_metadata.name ?? ""}&apos;s Notes
         </h2>
       )}
       <Button
         color="warning"
         variant="flat"
-        startContent={<Icon icon="material-symbols:add" className="size-5" />}
+        isLoading={mutate.isPending}
+        onClick={createNote}
+        startContent={
+          <Icon
+            icon="material-symbols:add"
+            className={cn("size-5", mutate.isPending && "hidden")}
+          />
+        }
       >
-        Create a Note
+        {mutate.isPending ? (
+          <span>Creating a note...</span>
+        ) : (
+          <span>Create a Untitled Note</span>
+        )}
       </Button>
     </div>
   );

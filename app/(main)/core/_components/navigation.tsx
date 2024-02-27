@@ -1,8 +1,8 @@
-"use client";
-
 import { Icon } from "@iconify/react";
 import { Tooltip, cn } from "@nextui-org/react";
 import UserActions from "./user-actions";
+import DocumentList from "./documents/document-list";
+import { Suspense } from "react";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -14,7 +14,7 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
       <aside
         data-collapsed={isCollapsed}
         className={cn(
-          "hidden group/sidebar h-screen lg:flex flex-col overflow-y-auto relative p-4 z-[99999] bg-[#f9f9f9] dark:bg-[#171717]"
+          "group/sidebar h-screen flex flex-col overflow-y-auto relative p-4 z-[99999] bg-[#f9f9f9] dark:bg-[#171717]"
         )}
       >
         <Tooltip content="Close Sidebar">
@@ -31,7 +31,9 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
           <UserActions />
         </div>
         <div className="mt-4">
-          <p>Documentes</p>
+          <Suspense fallback={<p>Loading...</p>}>
+            <DocumentList />
+          </Suspense>
         </div>
       </aside>
     </div>

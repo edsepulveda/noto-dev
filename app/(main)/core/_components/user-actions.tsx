@@ -1,7 +1,6 @@
 "use client";
 
 import useUser from "@/app/hooks/useUser";
-import { createClient } from "@/utils/supabase/client";
 import {
   Dropdown,
   DropdownTrigger,
@@ -14,7 +13,7 @@ import {
 import { Icon } from "@iconify/react";
 
 export default function UserActions() {
-  const { user, handleLogout } = useUser();
+  const { data, handleLogout } = useUser();
 
   return (
     <Dropdown placement="bottom-start">
@@ -24,13 +23,13 @@ export default function UserActions() {
           avatarProps={{
             isBordered: true,
             src: `${
-              user?.user_metadata.avatar_url
+              data?.data.user?.user_metadata.avatar_url
             }`,
             showFallback: true,
           }}
           className="transition-transform"
-          description={user?.email}
-          name={user?.user_metadata.full_name}
+          description={data?.data.user?.email}
+          name={data?.data.user?.user_metadata.full_name}
         />
       </DropdownTrigger>
       <DropdownMenu variant="flat">

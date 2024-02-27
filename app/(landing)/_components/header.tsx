@@ -6,7 +6,7 @@ import Link from "next/link";
 import useUser from "@/app/hooks/useUser";
 
 export function Header() {
-  const { user, isLoading } = useUser();
+  const { data, isLoading } = useUser();
 
   return (
     <div className="max-w-3xl space-y-4">
@@ -20,12 +20,12 @@ export function Header() {
         Noto is a singular workspace only for you
       </h3>
       <div className="flex flex-col-reverse gap-3 md:flex-row">
-        {!user && isLoading && (
+        {!data?.data.user && isLoading && (
           <span className="text-center mx-auto">
             <Icon icon="gg:spinner" className="size-9 animate-spin" />
           </span>
         )}
-        {user && !isLoading && (
+        {data?.data.user && !isLoading && (
           <Button
             as={Link}
             className="hero-button-effect-dark group mx-auto relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
@@ -41,7 +41,7 @@ export function Header() {
             </span>
           </Button>
         )}
-        {!user && !isLoading && (
+        {!data?.data.user && !isLoading && (
           <Button
             as={Link}
             className="hero-button-effect-dark group mx-auto relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"

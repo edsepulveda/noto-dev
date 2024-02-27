@@ -22,7 +22,7 @@ import { toast } from "sonner";
 export function NavbarLanding() {
   const supabase = createClient();
   const router = useRouter();
-  const { user, isLoading } = useUser();
+  const { data, isLoading } = useUser();
 
   const handleLogout = async () => {
     await supabase.auth.signOut({ scope: "local" }).then(() => {
@@ -37,15 +37,15 @@ export function NavbarLanding() {
         <Logo />
       </NavbarBrand>
       <NavbarContent justify="end">
-        {!user && isLoading && (
+        {!data?.data.user && isLoading && (
           <span className="flex items-end">
             <Icon icon="gg:spinner" className="size-6 animate-spin" />
           </span>
         )}
-        {user && !isLoading ? (
+        {data?.data.user && !isLoading ? (
           <div className="flex gap-5 items-center">
             <NavbarItem>
-              <UserProfile user={user} onClick={handleLogout} />
+              <UserProfile user={data?.data.user} onClick={handleLogout} />
             </NavbarItem>
           </div>
         ) : (
@@ -59,7 +59,7 @@ export function NavbarLanding() {
             </NextLink>
           </NavbarItem>
         )}
-        {!user && !isLoading && (
+        {!data?.data.user && !isLoading && (
           <NavbarItem>
             <Button color="primary" variant="flat" size="sm">
               Join Notion

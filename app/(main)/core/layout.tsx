@@ -19,7 +19,7 @@ export default function CoreLayout({
 }>) {
   const defaultLayout = [100, 440];
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { user, isLoading } = useUser();
+  const { data, isLoading } = useUser();
 
   if (isLoading) {
     return (
@@ -29,7 +29,7 @@ export default function CoreLayout({
     );
   }
 
-  if (!user) {
+  if (!data?.data.user) {
     return redirect("/");
   }
 
