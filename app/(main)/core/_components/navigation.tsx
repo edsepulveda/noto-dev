@@ -1,14 +1,32 @@
+"use client";
+
 import { Icon } from "@iconify/react";
 import { Tooltip, cn } from "@nextui-org/react";
 import UserActions from "./user-actions";
 import DocumentList from "./documents/document-list";
 import { Suspense } from "react";
+import { Item } from "./item";
+import { useDefaultNote } from "@/utils/mutations/default-note";
+import useUser from "@/app/hooks/useUser";
+import { toast } from "sonner";
 
 interface SidebarProps {
   isCollapsed: boolean;
 }
 
 export default function Sidebar({ isCollapsed }: SidebarProps) {
+  const { data } = useUser();
+  const mutation = useDefaultNote({ id: data?.data.user?.id ?? "" });
+
+  const createDefaultNote = () => {
+    const muta = mutation.mutateAsync();
+    toast.promise(muta, {
+      loading: "Creating a note...",
+      success: "Note has been created",
+      error: "Note cannot be created",
+    });
+  };
+
   return (
     <div>
       <aside
@@ -29,6 +47,27 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
 
         <div>
           <UserActions />
+          <Item
+            onClick={() => {}}
+            label="Search"
+            icon={
+              <Icon
+                icon="material-symbols:search"
+                className="shrink-0 mr-2 size-4 lg:size-6"
+              />
+            }
+            isSearch
+          />
+          <Item
+            onClick={createDefaultNote}
+            label={mutation.isPending ? "Creating Note..." : "Create Note"}
+            icon={
+              <Icon
+                icon="icon-park-solid:doc-add"
+                className="shrink-0 mr-2 size-4 lg:size-6"
+              />
+            }
+          />
         </div>
         <div className="mt-4">
           <Suspense fallback={<p>Loading...</p>}>

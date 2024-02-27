@@ -22,9 +22,7 @@ export default function UserActions() {
           as="button"
           avatarProps={{
             isBordered: true,
-            src: `${
-              data?.data.user?.user_metadata.avatar_url
-            }`,
+            src: `${data?.data.user?.user_metadata.avatar_url}`,
             showFallback: true,
           }}
           className="transition-transform"
@@ -33,6 +31,21 @@ export default function UserActions() {
         />
       </DropdownTrigger>
       <DropdownMenu variant="flat">
+        <DropdownSection title="Redirects">
+          <DropdownItem
+            href="/"
+            startContent={
+              <Icon
+                icon="material-symbols:home"
+                className={cn(
+                  "text-default-500 size-6 text-xl pointer-events-none flex-shrink-0"
+                )}
+              />
+            }
+          >
+            Go to home
+          </DropdownItem>
+        </DropdownSection>
         <DropdownSection title="Danger Zone">
           <DropdownItem
             key="sign-out"
