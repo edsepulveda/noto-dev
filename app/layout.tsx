@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers/providers";
-import { GeistSans } from 'geist/font/sans'
-
+import { GeistSans } from "geist/font/sans";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Noto",
@@ -24,7 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.className}`}>
-      <body >
+      <body>
+        <Toaster richColors />
         <Providers>
           <div>{children}</div>
         </Providers>

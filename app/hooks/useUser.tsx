@@ -11,26 +11,18 @@ export default function useUser() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const supabase = createClient();
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut().then(() => {
-      console.log("Signed out");
-    });
-  };
-
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
-      setTimeout(() => {
-        if (!data) {
-          setUser(null);
-          setIsLoading(false);
-        }
-        setUser(data.user);
+      if (!data) {
+        setUser(null);
         setIsLoading(false);
-      }, 1000);
+      }
+      setUser(data.user);
+      setIsLoading(false);
     };
     getUser();
   }, [supabase.auth]);
 
-  return { user, isLoading, handleLogout };
+  return { user, isLoading };
 }

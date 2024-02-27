@@ -38,10 +38,10 @@ export function LoginForm() {
           redirectTo: `${location.origin}/auth/callback`,
         },
       });
+
+      if (error) throw error;
     } catch (error) {
-      alert(error);
-    } finally {
-      setLoading(false);
+      console.error(error);
     }
   };
 

@@ -4,14 +4,18 @@ import {
   DropdownMenu,
   DropdownItem,
   Avatar,
-  User,
   DropdownSection,
   cn,
 } from "@nextui-org/react";
 import { type User as Users } from "@supabase/supabase-js";
 import { Icon } from "@iconify/react";
 
-export default function UserProfile({ user }: { user: Users | null }) {
+interface UserProps {
+  onClick: () => void;
+  user: Users | null;
+}
+
+export default function UserProfile({ user, onClick }: UserProps) {
   return (
     <div className="flex items-center gap-4">
       <Dropdown
@@ -45,6 +49,7 @@ export default function UserProfile({ user }: { user: Users | null }) {
               color="danger"
               className="text-danger"
               description="Close the current session"
+              onClick={onClick}
               startContent={
                 <Icon
                   icon="line-md:arrow-align-right"

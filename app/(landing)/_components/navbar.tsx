@@ -15,9 +15,21 @@ import { ThemeToggler } from "./theme-toggler";
 import useUser from "@/app/hooks/useUser";
 import { Icon } from "@iconify/react";
 import UserProfile from "./user-profile";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function NavbarLanding() {
-  const { user, isLoading, handleLogout } = useUser();
+  const supabase = createClient();
+  const router = useRouter();
+  const { user, isLoading } = useUser();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut({ scope: "local" }).then(() => {
+      toast.warning("You've been signed out", { duration: 500 });
+    });
+    router.replace("/login", { scroll: true });
+  };
 
   return (
     <Navbar className="bg-transparent">
@@ -33,17 +45,7 @@ export function NavbarLanding() {
         {user && !isLoading ? (
           <div className="flex gap-5 items-center">
             <NavbarItem>
-              <Button
-                variant="shadow"
-                color="danger"
-                size="sm"
-                onClick={() => handleLogout()}
-              >
-                Sign Out
-              </Button>
-            </NavbarItem>
-            <NavbarItem>
-              <UserProfile user={user} />
+              <UserProfile user={user} onClick={handleLogout} />
             </NavbarItem>
           </div>
         ) : (
