@@ -31,7 +31,7 @@ export default function UserProfile({ user, onClick }: UserProps) {
             isBordered
             as="button"
             className="transition-transform"
-            showFallback={!user?.user_metadata.avatar_url}
+            showFallback={user?.user_metadata.avatar_url}
             src={user?.user_metadata.avatar_url}
           />
         </DropdownTrigger>

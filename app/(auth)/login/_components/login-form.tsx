@@ -29,6 +29,22 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  const signInWithGoogle = async () => {
+    try {
+      setLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          queryParams: { access_type: "offline", prompt: "consent" },
+          redirectTo: `${location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const signInWithGithub = async () => {
     try {
       setLoading(true);
@@ -66,7 +82,9 @@ export function LoginForm() {
           <CardBody>
             <div className="flex flex-col space-y-5">
               <Button
+                isLoading={loading}
                 startContent={<Icon icon="devicon:google" className="size-5" />}
+                onClick={signInWithGoogle}
                 variant="faded"
               >
                 Sign in with Google

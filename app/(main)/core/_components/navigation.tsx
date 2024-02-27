@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { Tooltip, cn } from "@nextui-org/react";
+import UserActions from "./user-actions";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -13,7 +14,7 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
       <aside
         data-collapsed={isCollapsed}
         className={cn(
-          "group/sidebar h-screen flex flex-col overflow-y-auto relative p-4 z-[99999] bg-[#f9f9f9] dark:bg-[#171717]"
+          "hidden group/sidebar h-screen lg:flex flex-col overflow-y-auto relative p-4 z-[99999] bg-[#f9f9f9] dark:bg-[#171717]"
         )}
       >
         <Tooltip content="Close Sidebar">
@@ -27,7 +28,7 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
         </Tooltip>
 
         <div>
-          <p>Action Items</p>
+          <UserActions />
         </div>
         <div className="mt-4">
           <p>Documentes</p>
