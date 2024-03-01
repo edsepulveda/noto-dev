@@ -10,7 +10,7 @@ export function Hero() {
           <Image
             src={HeroLogo}
             fill
-            className="object-contain"
+            className="object-contain dark:bg-black"
             alt="landing page logo"
           />
         </div>

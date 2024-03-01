@@ -1,14 +1,20 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { Tooltip, cn } from "@nextui-org/react";
+import {
+  Tooltip,
+  cn,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@nextui-org/react";
 import UserActions from "./user-actions";
 import DocumentList from "./documents/document-list";
-import { Suspense } from "react";
 import { Item } from "./item";
 import { useDefaultNote } from "@/utils/mutations/default-note";
 import useUser from "@/app/hooks/useUser";
 import { toast } from "sonner";
+import { ArchiveBox } from "./archiveBox";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -70,9 +76,27 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
           />
         </div>
         <div className="mt-4">
-          <Suspense fallback={<p>Loading...</p>}>
-            <DocumentList />
-          </Suspense>
+          <DocumentList />
+          <div className="mt-5">
+            <Popover className="z-[99999999]" placement="right">
+              <PopoverTrigger>
+                <div role="button">
+                  <Item
+                    label="Archived Notes"
+                    icon={
+                      <Icon
+                        icon="material-symbols:archive"
+                        className="shrink-0 mr-2 size-4 lg:size-6"
+                      />
+                    }
+                  />
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-full">
+                <ArchiveBox />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </aside>
     </div>

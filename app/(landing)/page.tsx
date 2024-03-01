@@ -1,3 +1,5 @@
+'use client'
+
 import { Header, Footer, Hero} from './_components/index'
 
 export default function Home() {

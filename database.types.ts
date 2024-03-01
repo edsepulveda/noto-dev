@@ -46,6 +46,7 @@ export type Database = {
         Row: {
           content: string | null
           coverImage: string | null
+          createdAt: string
           icon: string | null
           id: string
           isArchived: boolean
@@ -57,6 +58,7 @@ export type Database = {
         Insert: {
           content?: string | null
           coverImage?: string | null
+          createdAt?: string
           icon?: string | null
           id: string
           isArchived?: boolean
@@ -68,6 +70,7 @@ export type Database = {
         Update: {
           content?: string | null
           coverImage?: string | null
+          createdAt?: string
           icon?: string | null
           id?: string
           isArchived?: boolean

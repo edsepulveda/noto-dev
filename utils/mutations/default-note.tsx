@@ -2,12 +2,18 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSupabaseBrowser } from "../supabase/client";
+import { TypedSupabaseClient } from "../types";
 
-interface Props {
-  id: string
+interface CreateProps {
+  id: string;
 }
 
-export const useDefaultNote = ({ id }: Props) => {
+interface CreateChildrenProps {
+  userId: string;
+  documentId: string;
+}
+
+export const useDefaultNote = ({ id }: CreateProps) => {
   const supabase = useSupabaseBrowser();
   const queryClient = useQueryClient();
 
@@ -23,6 +29,54 @@ export const useDefaultNote = ({ id }: Props) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
+  });
+};
+
+export const useCreateChildrenNote = ({
+  userId,
+  documentId,
+}: CreateChildrenProps) => {
+  const supabase = useSupabaseBrowser();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      return await supabase.from("Documents").insert({
+        id: crypto.randomUUID(),
+        title: "Untitled",
+        userId,
+        isArchived: false,
+        isPublished: false,
+        parentDocumentId: documentId,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+    },
+  });
+};
+
+interface UpdateProps {
+  id: string;
+  userId: string;
+}
+
+export const useCreateArchive = ({ id, userId }: UpdateProps) => {
+  const supabase = useSupabaseBrowser();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      return await supabase
+        .from("Documents")
+        .update({ isArchived: true })
+        .eq("id", id)
+        .eq("userId", userId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["documents"] });
+      queryClient.invalidateQueries({ queryKey: ["archived-documents"] });
     },
   });
 };
