@@ -27,7 +27,7 @@ export const ArchiveBox = () => {
 
   return (
     <div>
-      <Command className="relative outline-none shadow rounded-md min-w-[350px] w-full flex flex-col gap-2 mb-3 py-0 px-2">
+      <Command className="relative outline-none shadow rounded-md min-w-[250px] w-full flex flex-col gap-2 mb-3 py-0 px-2">
         <div className="flex items-center justify-center">
           <Icon icon="material-symbols:search" className="size-6 mr-2" />
           <Command.Input
@@ -52,10 +52,10 @@ export const ArchiveBox = () => {
           >
             {documents?.data?.map((document) => (
               <Command.Item
-                className="first:mt-2.5 p-2 text-sm rounded-sm w-full hover:bg-warning-500/5 flex items-center justify-between text-warning-500"
+                className="first:mt-2.5 p-1 text-sm rounded-sm w-full hover:bg-warning-500/5 flex items-center justify-between text-warning-500"
                 key={document.id}
               >
-                <span className="truncate pl-2">{document.title}</span>
+                <span className="text-ellipsis pl-2">{document.title}</span>
                 {/* Make this a component */}
                 <div className="flex">
                   <ArchiveActions

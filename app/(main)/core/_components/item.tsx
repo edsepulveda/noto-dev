@@ -4,12 +4,12 @@ import {
   useCreateArchive,
   useCreateChildrenNote,
 } from "@/utils/mutations/default-note";
+import { useSearchStore } from "@/utils/store/useSearch";
 import { Icon } from "@iconify/react";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Divider,
   cn,
   Button,
 } from "@nextui-org/react";
@@ -86,11 +86,11 @@ export const Item = ({
       role="button"
       style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
       className={cn(
-        "group min-h-6 text-sm py-1.5 pr-2 w-full hover:bg-warning-500/50 mt-3 [&>span]:font-bold font-medium flex items-center rounded-lg",
-        active && "bg-warning-500/50 text-warning-700"
+        "group min-h-6 text-sm py-2 pr-2 w-full hover:bg-warning-500/50 mt-3 [&>span]:font-bold font-medium flex items-center rounded-lg",
+        active && "bg-warning-500/50"
       )}
     >
-      {!!id && (
+      {/* {!!id && (
         <div
           role="button"
           className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1.5"
@@ -102,12 +102,12 @@ export const Item = ({
             <Icon icon="mdi:chevron-up" className="size-4 shrink-0" />
           )}
         </div>
-      )}
+      )} */}
 
       {documentIcon ? (
         <div className="shrink-0 mr-3 text-balance text-lg">{documentIcon}</div>
       ) : (
-        <div>{icon}</div>
+        <div className="ml-2">{icon}</div>
       )}
       <span className="text-balance">{label}</span>
       {isSearch && (

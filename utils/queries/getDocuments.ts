@@ -38,3 +38,12 @@ export function getArchivedNotes(client: TypedSupabaseClient, userId: string) {
     .eq("isArchived", true)
     .order("createdAt", { ascending: false });
 }
+
+export function getNotes(client: TypedSupabaseClient, userId: string) {
+  return client
+    .from("Documents")
+    .select()
+    .eq("userId", userId)
+    .eq("isArchived", false)
+    .order("createdAt", { ascending: false });
+}

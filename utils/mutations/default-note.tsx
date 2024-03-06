@@ -29,6 +29,8 @@ export const useDefaultNote = ({ id }: CreateProps) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
+      queryClient.invalidateQueries({ queryKey: ["archived-documents"] });
+      queryClient.invalidateQueries({ queryKey: ["search-notes"] });
     },
   });
 };
@@ -53,6 +55,8 @@ export const useCreateChildrenNote = ({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
+      queryClient.invalidateQueries({ queryKey: ["archived-documents"] });
+      queryClient.invalidateQueries({ queryKey: ["search-notes"] });
     },
   });
 };
@@ -77,6 +81,7 @@ export const useCreateArchive = ({ id, userId }: UpdateProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
       queryClient.invalidateQueries({ queryKey: ["archived-documents"] });
+      queryClient.invalidateQueries({ queryKey: ["search-notes"] });
     },
   });
 };

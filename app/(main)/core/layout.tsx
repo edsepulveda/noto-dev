@@ -11,6 +11,7 @@ import {
 } from "@/app/components/ui/resize";
 import { useState } from "react";
 import { cn } from "@nextui-org/react";
+import SearchCommand from "./_components/search/search-command";
 
 export default function CoreLayout({
   children,
@@ -64,6 +65,7 @@ export default function CoreLayout({
       <ResizableHandle />
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
         <main className="flex-1 h-screen overflow-y-auto dark:bg-[#121212]">
+          <SearchCommand />
           {children}
         </main>
       </ResizablePanel>

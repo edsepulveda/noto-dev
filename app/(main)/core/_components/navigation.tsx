@@ -15,6 +15,7 @@ import { useDefaultNote } from "@/utils/mutations/default-note";
 import useUser from "@/app/hooks/useUser";
 import { toast } from "sonner";
 import { ArchiveBox } from "./archiveBox";
+import { useSearchStore } from "@/utils/store/useSearch";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -23,6 +24,7 @@ interface SidebarProps {
 export default function Sidebar({ isCollapsed }: SidebarProps) {
   const { data } = useUser();
   const mutation = useDefaultNote({ id: data?.data.user?.id ?? "" });
+  const search = useSearchStore();
 
   const createDefaultNote = () => {
     const muta = mutation.mutateAsync();
@@ -54,7 +56,7 @@ export default function Sidebar({ isCollapsed }: SidebarProps) {
         <div>
           <UserActions />
           <Item
-            onClick={() => {}}
+            onClick={search.onOpen}
             label="Search"
             icon={
               <Icon
