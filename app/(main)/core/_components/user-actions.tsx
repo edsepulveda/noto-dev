@@ -16,8 +16,8 @@ export default function UserActions() {
   const { data, handleLogout } = useUser();
 
   return (
-    <Dropdown placement="bottom-start">
-      <DropdownTrigger>
+    <Dropdown placement="bottom-end">
+      <DropdownTrigger className="mt-5" aria-label="trigger">
         <User
           as="button"
           avatarProps={{
@@ -25,12 +25,11 @@ export default function UserActions() {
             src: `${data?.data.user?.user_metadata.avatar_url}`,
             showFallback: true,
           }}
-          className="transition-transform"
-          description={data?.data.user?.email}
+          className="transition-transform truncate"
           name={data?.data.user?.user_metadata.full_name}
         />
       </DropdownTrigger>
-      <DropdownMenu variant="flat">
+      <DropdownMenu variant="flat" aria-label="Menu">
         <DropdownSection title="Redirects">
           <DropdownItem
             href="/"

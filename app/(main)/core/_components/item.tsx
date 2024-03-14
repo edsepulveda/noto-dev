@@ -3,7 +3,7 @@ import useUser from "@/app/hooks/useUser";
 import {
   useCreateArchive,
   useCreateChildrenNote,
-} from "@/utils/mutations/default-note";
+} from "@/utils/mutations/mutations";
 import { useSearchStore } from "@/utils/store/useSearch";
 import { Icon } from "@iconify/react";
 import {
@@ -12,6 +12,11 @@ import {
   PopoverContent,
   cn,
   Button,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
 } from "@nextui-org/react";
 import { Kbd, Skeleton } from "@nextui-org/react";
 import { toast } from "sonner";
@@ -86,8 +91,8 @@ export const Item = ({
       role="button"
       style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
       className={cn(
-        "group min-h-6 text-sm py-2 pr-2 w-full hover:bg-warning-500/50 mt-3 [&>span]:font-bold font-medium flex items-center rounded-lg",
-        active && "bg-warning-500/50"
+        "group min-h-[27px] text-sm  py-1 pr-3 w-full hover:bg-primary/5 mt-3 [&>span]:font-medium font-medium flex items-center text-muted-foreground",
+        active && "bg-primary/5 text-primary"
       )}
     >
       {/* {!!id && (
@@ -105,7 +110,7 @@ export const Item = ({
       )} */}
 
       {documentIcon ? (
-        <div className="shrink-0 mr-3 text-balance text-lg">{documentIcon}</div>
+        <div className="shrink-0 mr-2 text-balance text-lg">{documentIcon}</div>
       ) : (
         <div className="ml-2">{icon}</div>
       )}
@@ -127,12 +132,17 @@ export const Item = ({
                 <Icon icon="tabler:dots" className="size-4" />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-60 p-2.5">
+            <PopoverContent className="w-60 p-2">
               <Button
                 size="sm"
-                className="w-full"
+                className="inline-flex w-full"
                 onClick={handleClick}
-                startContent={<Icon icon="mdi:trash" className="size-4" />}
+                startContent={
+                  <Icon
+                    icon="mdi:trash"
+                    className={cn("size-4", mutate.isPending && "hidden")}
+                  />
+                }
                 variant="flat"
                 color="danger"
                 isLoading={mutate.isPending}

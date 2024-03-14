@@ -7,13 +7,13 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-full rounded-md relative">
+    <div className="min-h-[calc(100vh)] rounded-md relative bg-backrground dark:bg-[#121212]">
+      <NavbarLanding />
+      <main className="h-full">{children}</main>
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
         fill="white"
       />
-      <NavbarLanding />
-      <main className="h-full pt-0 md:pt-20">{children}</main>
     </div>
   );
 }

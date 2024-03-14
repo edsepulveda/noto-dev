@@ -59,13 +59,6 @@ export function NavbarLanding() {
             </NextLink>
           </NavbarItem>
         )}
-        {!data?.data.user && !isLoading && (
-          <NavbarItem>
-            <Button color="primary" variant="flat" size="sm">
-              Join Notion
-            </Button>
-          </NavbarItem>
-        )}
         <NavbarItem>
           <ThemeToggler />
         </NavbarItem>

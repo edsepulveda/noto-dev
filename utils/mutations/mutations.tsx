@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSupabaseBrowser } from "../supabase/client";
+import { type Documents } from "@prisma/client";
 import { TypedSupabaseClient } from "../types";
 
 interface CreateProps {

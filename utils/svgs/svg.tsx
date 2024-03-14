@@ -3,7 +3,7 @@ import * as React from "react";
 const EmptySVG = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={485.834}
+    width={350}
     height={483.5}
     data-name="Layer 1"
     {...props}

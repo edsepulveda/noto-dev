@@ -76,7 +76,7 @@ export default function SearchCommand() {
               key={document.id}
               value={`${document.id}-${document.title}`}
               title={document.title}
-              className="cursor-pointer"
+              className="cursor-pointer text-muted-foreground"
               onSelect={() => onRedirect(document.id)}
             >
               {document.icon ? (

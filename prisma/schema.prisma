@@ -1,36 +1,91 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-  schemas   = ["public"]
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
 }
 
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Workspaces {
+  id             String    @id @default(uuid())
+  createdAt      DateTime  @default(now())
+  workspaceOwner String    @default(uuid())
+  title          String
+  iconId         String
+  data           String
+  inTrash        String
+  logo           String
+  bannerURL      String
+  Files          Files[]
+  Folders        Folders[]
+
+  @@map("workspaces")
+}
+
+model Folders {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  title       String
+  iconId      String
+  data        String
+  inTrash     String
+  logo        String
+  bannerURL   String
+  workspaceId String
+  files       Files[]
+  workspace   Workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("folders")
+}
+
+model Files {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  title       String
+  iconId      String
+  data        String
+  inTrash     String
+  logo        String
+  bannerURL   String
+  folderId    String
+  workspaceId String
+  folder      Folders    @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  workspace   Workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("files")
+}
+
 model Documents {
-  id                String      @id @default(uuid())
+  id                String              @id @default(uuid())
   title             String
   userId            String
-  isArchived        Boolean     @default(false)
-  parentDocumentId  String?     @unique
-  parentDocument    Documents?  @relation("ParentDocument", fields: [parentDocumentId], references: [id])
-  childrenDocuments Documents[] @relation("ParentDocument")
+  isArchived        Boolean             @default(false)
+  parentDocumentId  String?             @unique
   content           String?
   coverImage        String?
   icon              String?
-  isPublished       Boolean     @default(false)
-  createdAt         DateTime    @default(now())
+  isPublished       Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  ChildrenDocuments ChildrenDocuments[]
 
-  @@index([userId], name: "by_user")
-  @@index([userId, parentDocumentId], name: "by_user_parent")
-  @@schema("public")
+  @@map("documents")
+}
+
+model ChildrenDocuments {
+  id               String     @id @default(uuid())
+  title            String
+  userId           String
+  isArchived       Boolean    @default(false)
+  content          String?
+  coverImage       String?
+  icon             String?
+  isPublished      Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  parentDocument   Documents? @relation(fields: [parentDocumentId], references: [id])
+  parentDocumentId String
+
+  @@map("children_documents")
 }

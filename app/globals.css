@@ -7,7 +7,10 @@
 }
 
 html,
-body :root {
+body,
+main {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
   height: 100%;
 }
 
@@ -21,6 +24,14 @@ body :root {
   syntax: "<angle>";
   initial-value: 360deg;
   inherits: false;
+}
+
+.moving-background {
+  will-change: transform;
+  background-size: 3rem 3rem;
+  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+    linear-gradient(to bottom, #8882 1px, transparent 1px);
+  animation: movingBackground 90s linear infinite !important;
 }
 
 .hero-button-effect {
@@ -51,6 +62,15 @@ body :root {
   }
   100% {
     --gradient-angle: 0deg;
+  }
+}
+
+@keyframes movingBackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, -50%);
   }
 }
 

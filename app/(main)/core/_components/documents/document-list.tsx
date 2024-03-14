@@ -75,7 +75,7 @@ export default function DocumentList({ level = 0, parentDocument }: Props) {
             id={document.id}
             onClick={() => onRedirectAction(document.id)}
             label={document.title}
-            icon={<Icon icon="tabler:file-filled" className="size-5 mr-2" />}
+            icon={<Icon icon="tabler:file-filled" className="size-[18px] mr-3" />}
             documentIcon={document.icon ?? ""}
             active={params.documentId === document.id}
             level={level}

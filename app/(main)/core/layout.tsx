@@ -4,13 +4,6 @@ import { Spinner } from "@/app/components/spinner";
 import useUser from "@/app/hooks/useUser";
 import { redirect } from "next/navigation";
 import Sidebar from "./_components/navigation";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/app/components/ui/resize";
-import { useState } from "react";
-import { cn } from "@nextui-org/react";
 import SearchCommand from "./_components/search/search-command";
 
 export default function CoreLayout({
@@ -18,8 +11,6 @@ export default function CoreLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const defaultLayout = [100, 440];
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const { data, isLoading } = useUser();
 
   if (isLoading) {
@@ -35,40 +26,12 @@ export default function CoreLayout({
   }
 
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      onLayout={(sizes: number[]) => {
-        document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-          sizes
-        )}`;
-      }}
-      className="h-full max-h-[800px] items-stretch"
-    >
-      <ResizablePanel
-        defaultSize={defaultLayout[0]}
-        collapsedSize={4}
-        collapsible={true}
-        minSize={15}
-        maxSize={30}
-        onCollapse={() => {
-          setIsCollapsed(true);
-          document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-            isCollapsed
-          )}`;
-        }}
-        className={cn(
-          isCollapsed && "min-w-[50px] transition-all duration-500 ease-in-out"
-        )}
-      >
-        <Sidebar isCollapsed={isCollapsed} />
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-        <main className="flex-1 h-screen overflow-y-auto dark:bg-[#121212]">
-          <SearchCommand />
-          {children}
-        </main>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+    <div className="h-full flex">
+      <Sidebar />
+      <main className="flex-1 h-full overflow-y-auto dark:bg-[#121212]">
+        <SearchCommand />
+        {children}
+      </main>
+    </div>
   );
 }
