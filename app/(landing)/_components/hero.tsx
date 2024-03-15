@@ -1,5 +1,4 @@
 import Image from "next/image";
-import HeroLogo from "@/public/notes-landing.svg";
 import Link from "next/link";
 import Supabase from "@/public/logos/supabase-logo-icon.svg";
 import Prisma from "@/public/logos/prisma-3.svg";

@@ -16,16 +16,16 @@ export function Header() {
         heading="Your ideas can be true with Noto"
         subContent="Noto is shared workspace based application"
       />
-      <div className="flex flex-col-reverse gap-3 md:flex-row mt-5">
+      <div className="w-full flex flex-col gap-3 md:flex-row mt-5 justify-start md:justify-center">
         {!data?.data.user && isLoading && (
-          <span className="text-center mx-auto">
+          <span className="md:text-center">
             <Icon icon="gg:spinner" className="size-9 animate-spin" />
           </span>
         )}
         {data?.data.user && !isLoading && (
           <Button
             as={Link}
-            className="hero-button-effect-dark group mx-auto relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
+            className="hero-button-effect-dark group mx-auto relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
             href={"/core/documents"}
             variant="faded"
           >
@@ -41,7 +41,7 @@ export function Header() {
         {!data?.data.user && !isLoading && (
           <Button
             as={Link}
-            className="hero-button-effect-dark group mx-auto relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8] md:mr-0 lg:mr-auto"
+            className="hero-button-effect-dark group relative w-fit overflow-hidden rounded-xl p-px font-bold transition-all duration-300 dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
             href={"/login"}
             variant="faded"
           >

@@ -1,6 +1,7 @@
 "use client";
 
 import { Header, Footer, Hero } from "./_components/index";
+import PricePage from "./_components/price";
 
 export default function Home() {
   return (
@@ -9,8 +10,11 @@ export default function Home() {
         <section>
           <Header />
         </section>
-        <section className="w-full">
+        <section className="mt-20 px-4 sm:px-6 w-full">
           <Hero />
+        </section>
+        <section className="mt-20 px-4 sm:px-6 w-full">
+          <PricePage />
         </section>
       </div>
       <Footer />

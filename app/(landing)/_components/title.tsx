@@ -15,7 +15,7 @@ export default function Title({ heading, pill, subContent }: Props) {
         </article>
         {subContent ? (
           <>
-            <h2 className="text-left text-3xl md:text-5xl lg:text-6xl font-semibold scroll-m-20 leading-tight">
+            <h2 className="text-left text-3xl md:text-5xl font-semibold scroll-m-20 leading-tight">
               {heading}
             </h2>
             <p className="text-left text-muted-foreground sm:max-w-[450px] md:text-center">

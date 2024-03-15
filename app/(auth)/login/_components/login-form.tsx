@@ -16,6 +16,7 @@ import { LoginSchema, loginSchema } from "../../_login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
+import signinAction from "../actions/_actions";
 
 const DEFAULT_VALUES: Partial<LoginSchema> = {};
 
@@ -61,8 +62,12 @@ export function LoginForm() {
     }
   };
 
-  const handleSubmit: SubmitHandler<LoginSchema> = (data) => {
+  const handleSubmit: SubmitHandler<LoginSchema> = async (data) => {
     console.log(data);
+    const response = await signinAction({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   const customToggle = () => {
